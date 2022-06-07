@@ -1,0 +1,16 @@
+extends ../template/layout.pug
+
+block content
+    div
+        if error
+            span=error
+        form(method="POST")
+            input(name="email" placeholder="your email" type="email" required)
+            input(name="name" placeholder="your real name" type="text" required)            
+            input(name="username" placeholder="your nick name" type="text" required)
+            input(name="password" placeholder="your password" type="password" required)
+            input(name="checkpass" placeholder="for password validation" type="password" required)
+            input(type="submit" value="join now!")
+        hr
+        span you already have account? 
+        a(href="/users/login") login now! &rarr; 
