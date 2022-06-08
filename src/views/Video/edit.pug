@@ -1,0 +1,10 @@
+extends ../template/layout.pug
+
+
+block content 
+    h4 Edit Video
+    form(method="POST")
+        input(name="title",placeholder="title for update",required, type="text",maxlength=50,value=video.title)
+        input(name="description",placeholder="description in here",required, type="text",maxlength=250 value=video.description)
+        input(name="hashtags",placeholder="hashtags, separated by ,",required, type="text",value=video.hashtags.join()) 
+        input(value="Update!",type="submit")

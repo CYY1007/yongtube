@@ -9,6 +9,7 @@ const userSchema = mongoose.Schema(
         username : {type:String, required: true, unique: true},
         password:{type:String, required:false},
         name: {type:String, required:true},
+        videos : [{type: mongoose.Schema.Types.ObjectId, ref:"Video"}],
         // videos : [{type: mongoose.Schema.Types.ObjectId, ref:"Video"}],
         // comments : [{type: mongoose.Schema.Types.ObjectId, ref:"Comment"}]
     }
@@ -16,7 +17,7 @@ const userSchema = mongoose.Schema(
 
 userSchema.pre('save', async function (){
     if(this.isModified("password"))
-        this.password = await bcrypt.hash(this.password,16);
+        this.password = await bcrypt.hash(this.password,10);
 })
 
 const User = mongoose.model("User",userSchema);

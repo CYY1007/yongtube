@@ -1,4 +1,10 @@
 extends template/layout.pug
+include mixins/videos.pug
 
 block content 
-    h1 temp
+    h1=pageTitle 
+    div.video-grid
+        each video in videos
+            +video(video)
+        else
+            span.empty__message No videos found

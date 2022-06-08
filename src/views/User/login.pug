@@ -1,0 +1,16 @@
+extends ../template/layout.pug
+
+block content 
+    div
+        if error
+            span=error
+        form(method="POST")
+            input(name="email" placeholder="email" type="email" required)
+            input(name="password" placeholder="password" type="password" required)
+            input(type="submit" value="login now!")
+        hr
+        span you don't have account? 
+        a(href="/users/login") join now! &rarr; 
+        br
+        span
+        a(href="/users/kakao/start") continue with kakao! &rarr;
