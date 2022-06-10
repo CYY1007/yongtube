@@ -1,0 +1,10 @@
+extends ../template/layout.pug
+
+block content 
+    if error 
+        h4=error
+    form(method="POSt")
+        input(name="oldpassword", required, type="password", placeholder="old password")
+        input(name="password", required,type="password",placeholder="new password")
+        input(name="checkpass", required,type="password",placeholder="new password validation")
+        input(type="submit",value="Update password!")

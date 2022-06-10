@@ -6,10 +6,9 @@ block content
     //-     button#startRecordBtn Start Recording
     if error
         span=error
-    //- enctype="multipart/form-data"
-    form(method="POST")
-        //- label(for="video") Video
-        //- input(type="file", id="video", name="video",accept="video/*",required)
+    form(method="POST" enctype="multipart/form-data")
+        label(for="video") Video
+        input(type="file", id="video", name="video",accept="video/*",required)
         input(name="title",placeholder="title in here",required, type="text",maxlength=50)
         input(name="description",placeholder="description in here",required, type="text",maxlength=250)
         input(name="hashtags",placeholder="hashtags, separated by ,",required, type="text")                

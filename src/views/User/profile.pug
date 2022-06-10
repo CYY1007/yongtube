@@ -1,0 +1,16 @@
+extends ../template/layout.pug
+include ../mixins/videos.pug
+
+block content 
+    div.profile__data
+        if target.avatarUrl
+            img(src="/" + target.avatarUrl).avatar
+        h3=target.name
+        if user
+            if String(target._id) === String(user._id)
+                a(href=`/users/${target.id}/profile/edit`) Edit Profile &rarr;
+    div.video-grid
+        each video in target.videos
+            +video(video)
+        else
+            span.empty__message No videos found

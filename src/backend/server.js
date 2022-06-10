@@ -21,6 +21,8 @@ app.use(session({
     store: MongoSession.create({mongoUrl: process.env.DB_URL})
 }));
 // app.use(flash())
+app.use("/files",express.static("files"));
+app.use("/assets",express.static("assets"));
 app.use(editLocals) 
 app.use('/',home)
 app.use('/users',user)

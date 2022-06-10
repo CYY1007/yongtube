@@ -1,0 +1,14 @@
+extends ../template/layout.pug
+
+block content
+    if error 
+        h4=error
+    form(method="POST",enctype="multipart/form-data").edit-profile__form
+        label(for="avatar") Avatar
+        input(type="file", id="avatar", name="avatar",accept="image/*")
+        input(name="email", required,type="email",placeholder="email",value=user.email)
+        input(name="username", required,placeholder="username",value=user.username)
+        input(type="submit", value="Update profile!")
+        if !user.isO_Auth
+            div.edit-profile__password
+                a(href="edit/change-password") Change Password &rarr;

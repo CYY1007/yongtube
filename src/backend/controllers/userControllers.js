@@ -102,19 +102,52 @@ export const finishKakao = async (req,res) =>{
 }
 
 export const getEditProfile = (req,res) =>{
-    res.send("getjoin")
+    return res.render("User/edit-profile",{pageTitle:"Edit your profile!"})
 }
 
-export const postEditProfile = (req,res) =>{
-    res.send("getjoin")
+export const postEditProfile = async (req,res) =>{
+    const {session:{user:{_id, username:oldUsername, email:oldEmail}}, body:{email, username}, file} = req;
+    let existing = null;
+    if(oldUsername === username && oldEmail !== email)
+        existing = await User.exists({email});
+    else if (oldUsername !== username && oldEmail === email)
+        existing = await User.exists({username})
+    else if (oldUsername !== username && oldEmail !== email){
+        existing = await User.exists({$or: [{username},{email}]})
+    }
+    if (existing){
+        return res.render("User/edit-profile",{pageTitle:"Edit Profile",error: "email or username is alredy taken"})
+    }
+    const target = await User.findByIdAndUpdate(_id,{
+        avatarUrl : file ? file.path : target.avatarUrl,
+        username,
+        email,
+    },{new: true});
+    req.session.user = target
+    return res.redirect(`/users/${target._id}/profile`)
 }
 
 export const getChangePass = (req,res) =>{
-    res.send("getjoin")
+    res.render("User/change-pass",{pageTitle:"Change Password"})
 }
 
-export const postChangePass = (req,res) =>{
-    res.send("getjoin")
+export const postChangePass = async (req,res) =>{
+    const {session:{user:{password}},params:{id},body:{oldpassword,password:newPass,checkpass}}=req
+    const exist = User.exists({_id: id});
+    if(!exist){
+        return res.render("404",{pageTitle:"user is not found"})
+    }
+    const ok = await bcrypt.compare(oldpassword,password)
+    if(!ok){
+        return res.render("User/change-pass",{error:"password is wrong"})
+    }
+    if (newPass !== checkpass){
+        return res.render("User/change-pass",{error:"password validation fail"})
+    }
+    const target = await User.findById(id)
+    target.password = newPass
+    target.save()
+    return res.redirect("/users/logout");
 }
 
 export const logout = (req,res) =>{
@@ -122,6 +155,18 @@ export const logout = (req,res) =>{
     return res.redirect('/');
 }
 
-export const showProfile = (req, res) =>{
-    res.send("show profile")
+export const showProfile = async (req, res) =>{
+    const {params: {id}} = req
+    const user = await User.findById(id).populate({
+        path: "videos",
+        populate:{
+            path:"owner",
+            model:"User"
+        }
+    })
+    if(!user){
+        return res.status(404).render("404",{pageTitle:"user not found"});
+    }
+    return res.render("User/profile",{pageTitle:`${user.username}'s profile`, target:user});
+    
 }
