@@ -15,10 +15,13 @@ header
                     a(href=`users/${user._id}/profile/edit`) Edit profile
                 li 
                     a(href=`/users/${user._id}/profile`)
-                        if user.avatarUrl === ""
-                            span.default__text your profile 
-                        else 
-                            img.header__avatar(src="/" + user.avatarUrl)
+                        if !user.avatarUrl 
+                            span your profile
+                        else
+                            if user.isO_Auth_profile 
+                                img.header__avatar(src=user.avatarUrl)
+                            else 
+                                img.header__avatar(src="/" + user.avatarUrl)
             else
                 li 
                     a(href="/users/login") Log in

@@ -93,6 +93,7 @@ export const finishKakao = async (req,res) =>{
             username:nickname,
             password:"",
             isO_Auth: true,
+            isO_Auth_profile: true,
             avatarUrl
         })
     }
@@ -118,11 +119,16 @@ export const postEditProfile = async (req,res) =>{
     if (existing){
         return res.render("User/edit-profile",{pageTitle:"Edit Profile",error: "email or username is alredy taken"})
     }
-    const target = await User.findByIdAndUpdate(_id,{
-        avatarUrl : file ? file.path : target.avatarUrl,
-        username,
-        email,
-    },{new: true});
+    const target = await User.findById(_id);
+    if (!target){
+        return res.status(404).redirect('/');
+    }
+    target.username = username;
+    target.email = email;
+    if (file)
+        target.isO_Auth_profile = target.isO_Auth && target.isO_Auth_profile && (target.avatarUrl === file.path)? true : false
+    target.avatarUrl = file ? file.path : target.avatarUrl;
+    target.save();
     req.session.user = target
     return res.redirect(`/users/${target._id}/profile`)
 }

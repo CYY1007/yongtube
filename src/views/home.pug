@@ -1,8 +1,7 @@
 extends template/layout.pug
 include mixins/videos.pug
 
-block content 
-    h1=pageTitle 
+block content
     div.video-grid
         each video in videos
             +video(video)

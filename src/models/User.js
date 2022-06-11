@@ -6,12 +6,12 @@ const userSchema = mongoose.Schema(
         email: {type:String, required:true},
         avatarUrl: {type: String},
         isO_Auth:{type:Boolean, default: false},
+        isO_Auth_profile:{type:Boolean,default:false},
         username : {type:String, required: true, unique: true},
         password:{type:String, required:false},
         name: {type:String, required:true},
         videos : [{type: mongoose.Schema.Types.ObjectId, ref:"Video"}],
-        // videos : [{type: mongoose.Schema.Types.ObjectId, ref:"Video"}],
-        // comments : [{type: mongoose.Schema.Types.ObjectId, ref:"Comment"}]
+        comments : [{type: mongoose.Schema.Types.ObjectId, ref:"Comment"}]
     }
 )
 

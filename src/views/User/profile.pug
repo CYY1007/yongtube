@@ -3,12 +3,21 @@ include ../mixins/videos.pug
 
 block content 
     div.profile__data
-        if target.avatarUrl
+        if target.avatarUrl && target.isO_Auth_profile
+            img(src=target.avatarUrl).avatar
+        if target.avatarUrl && !target.isO_Auth_profile
             img(src="/" + target.avatarUrl).avatar
-        h3=target.name
+        if !target.avatarUrl
+            div 
+                span.default__avatar No avatar
+        div.profile__name
+            span username : #{target.name}
         if user
             if String(target._id) === String(user._id)
-                a(href=`/users/${target.id}/profile/edit`) Edit Profile &rarr;
+                div.profile__btn__div
+                    a(href=`/users/${target.id}/profile/edit`).profile__btn
+                        i.fas.fa-eye-dropper
+                        | Edit Profile &rarr;
     div.video-grid
         each video in target.videos
             +video(video)

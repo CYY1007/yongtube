@@ -19,17 +19,42 @@ block content
                     span#fullScreen 
                          i.fas.fa-expand
      div.video__data
-          p.video__title=video.title
-          p.video__description=video.description
+          div.video__basic__data
+               p.video__title=video.title
+               span description
+               div.video__description
+                    span=video.description
+          br.video__data__br
           small.video__owner Uploaded by 
                a(href=`/users/${video.owner._id}/profile`)=video.owner.name
           small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
           if String(video.owner.id) === (user && String(user._id))
-            a(href=`${video.id}/edit`) Edit Video &rarr;
-            br
-            a(href=`${video.id}/delete`) Delete Video &rarr;
+               div.video__edit
+                    a(href=`${video.id}/edit`).first
+                         i.fas.fa-eye-dropper
+                         |  Edit Video &rarr;
+                    br
+                    a(href=`${video.id}/delete`).second
+                         i.fas.fa-ban 
+                         |  Delete Video &rarr;
+     if loggedIn
+          div.video__add-comments
+               span.video__add-comments-start Write your Comment!
+               form.video__comment-form#commentFrom(method="POST")
+                    textarea(cols="30", rows="10" placeholder="Wrtie a comment")
+                    button Add comment
+     div.video__comments
+          span.comment__notification Comments
+          ul#commentList 
+               each comment in video.comments.reverse()
+                    li.video__comment#comment(data-id=comment._id)
+                         i.fas.fa-comment  
+                         span   #{comment.text}
+                         if String(comment.owner) === String(user && user._id)
+                              span.delete__comment#deleteBtn
+                                   i.fas.fa-ban
 
 block scripts
      script(src="/assets/js/videoPlayer.js")
-     //- if loggedIn
-     //-      script(src="/assets/js/commentSection.js")
+     if loggedIn
+          script(src="/assets/js/commentSection.js")
