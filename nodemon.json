@@ -1,3 +1,4 @@
 {
-    "exec": "npx babel-node src/backend/init.js"
+    "exec": "npx babel-node src/backend/init.js",
+    "ignore": "src/frontend/*"
 }

@@ -2,29 +2,32 @@ extends ../template/layout.pug
 
 block content
      div#videoContainer(data-Id=video._id)
-          video(src="/" + video.fileUrl controls)
+          video(src="/" + video.fileUrl)
           div#videoControls.videoControls
-               button(value="play")#play play
-               div 
-                    span#currentTime 00:00
-                    span / 
-                    span#totalTime 00:00
+               div.videoControls__play
+                    span#play.videoControls__playBtn play
+                    div.videoControls__time
+                         span#currentTime 00:00
+                         span / 
+                         span#totalTime 00:00
                input(type="range" step="1" value="0" min="0")#timeLine
-               div 
+               div.videoControls__volume
                     input(type="range" step="0.1" value=0.5 min="0" max="1")#volume
-                    button(value="mute")#mute mute
-               div 
-                    button(value="fullscreen")#fullscreen fullscreen
-     //- div.video__data
-     //-      p.video__title=video.title
-     //-      p.video__description=video.description
-     //-      small.video__owner Uploaded by 
-     //-           a(href=`/users/${video.owner._id}/profile`)=video.owner.name
-     //-      small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
-     //-      if String(video.owner.id) === (user && String(user._id))
-     //-        a(href=`${video.id}/edit`) Edit Video &rarr;
-     //-        br
-     //-        a(href=`${video.id}/delete`) Delete Video &rarr;
+                    span#mute
+                         i.fas.fa-volume-up
+               div
+                    span#fullScreen 
+                         i.fas.fa-expand
+     div.video__data
+          p.video__title=video.title
+          p.video__description=video.description
+          small.video__owner Uploaded by 
+               a(href=`/users/${video.owner._id}/profile`)=video.owner.name
+          small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
+          if String(video.owner.id) === (user && String(user._id))
+            a(href=`${video.id}/edit`) Edit Video &rarr;
+            br
+            a(href=`${video.id}/delete`) Delete Video &rarr;
 
 block scripts
      script(src="/assets/js/videoPlayer.js")

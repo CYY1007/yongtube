@@ -6,7 +6,7 @@ import flash from "express-flash";
 import session from "express-session"
 import MongoSession from "connect-mongo"
 import { editLocals } from "./middlewares";
-
+import api from "./routers/apiRouter"
 
 const app = express();
 
@@ -27,4 +27,5 @@ app.use(editLocals)
 app.use('/',home)
 app.use('/users',user)
 app.use('/videos',video)
+app.use('/api',api);
 export default app;

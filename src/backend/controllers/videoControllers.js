@@ -76,3 +76,15 @@ export const search = async (req,res) =>{
     }
     return res.render("Video/search",{pageTitle:"Search",videos})
 }
+
+export const registerView = async (req,res) =>{
+    const {params:{id}} = req;
+    const target = await Video.findById(id)
+    if (!target){
+        console.log(id);
+        return res.sendStatus(404);
+    }
+    target.meta.views = target.meta.views + 1;
+    await target.save();
+    return res.sendStatus(200);
+}
