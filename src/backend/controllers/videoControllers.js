@@ -7,11 +7,13 @@ export const getUpload = (req,res) =>{
     return res.render("Video/upload",{pageTitle:"Upload"})
 }
 
+const isHeroku = process.env.NODE_ENV === "production"
+
 export const postUpload = async (req,res) =>{
     const {session:{user:{_id}},body:{title,description,hashtags},file} = req
     try{
         const newVideo = await Video.create({
-            fileUrl : file.location,
+            fileUrl : isHeroku ? file.location : file.path,
             title,
             description,
             hashtags: Video.formatHash(hashtags),

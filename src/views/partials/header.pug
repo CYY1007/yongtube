@@ -21,7 +21,10 @@ header
                             if user.isO_Auth_profile 
                                 img.header__avatar(src=user.avatarUrl)
                             else 
-                                img.header__avatar(src=user.avatarUrl)
+                                if isHeroku
+                                    img.header__avatar(src=user.avatarUrl)
+                                else 
+                                    img.header__avatar(src= '/' + user.avatarUrl)
             else
                 li 
                     a(href="/users/login") Log in

@@ -106,6 +106,8 @@ export const getEditProfile = (req,res) =>{
     return res.render("User/edit-profile",{pageTitle:"Edit your profile!"})
 }
 
+const isHeroku = process.env.NODE_ENV === "production"
+
 export const postEditProfile = async (req,res) =>{
     const {session:{user:{_id, username:oldUsername, email:oldEmail}}, body:{email, username}, file} = req;
     let existing = null;
@@ -127,8 +129,8 @@ export const postEditProfile = async (req,res) =>{
     target.username = username;
     target.email = email;
     if (file)
-        target.isO_Auth_profile = target.isO_Auth && target.isO_Auth_profile && (target.avatarUrl === file.location)? true : false
-    target.avatarUrl = file ? file.location : target.avatarUrl;
+        target.isO_Auth_profile = target.isO_Auth && target.isO_Auth_profile && (target.avatarUrl === (isHeroku ? file.location : file.path))? true : false
+    target.avatarUrl = file ? (isHeroku ? file.location : file.path) : target.avatarUrl;
     target.save();
     req.session.user = target
     return res.redirect(`/users/${target._id}/profile`)

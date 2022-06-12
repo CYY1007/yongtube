@@ -6,7 +6,10 @@ block content
         if target.avatarUrl && target.isO_Auth_profile
             img(src=target.avatarUrl).avatar
         if target.avatarUrl && !target.isO_Auth_profile
-            img(src= target.avatarUrl).avatar
+            if isHeroku
+                img(src= target.avatarUrl).avatar
+            else 
+                img(src= "/" + target.avatarUrl).avatar
         if !target.avatarUrl
             div 
                 span.default__avatar No avatar
