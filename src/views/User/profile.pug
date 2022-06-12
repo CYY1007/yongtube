@@ -6,7 +6,7 @@ block content
         if target.avatarUrl && target.isO_Auth_profile
             img(src=target.avatarUrl).avatar
         if target.avatarUrl && !target.isO_Auth_profile
-            img(src="/" + target.avatarUrl).avatar
+            img(src= target.avatarUrl).avatar
         if !target.avatarUrl
             div 
                 span.default__avatar No avatar

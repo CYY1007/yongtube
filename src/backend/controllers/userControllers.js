@@ -123,11 +123,12 @@ export const postEditProfile = async (req,res) =>{
     if (!target){
         return res.status(404).redirect('/');
     }
+    console.log("file\n",file)
     target.username = username;
     target.email = email;
     if (file)
-        target.isO_Auth_profile = target.isO_Auth && target.isO_Auth_profile && (target.avatarUrl === file.path)? true : false
-    target.avatarUrl = file ? file.path : target.avatarUrl;
+        target.isO_Auth_profile = target.isO_Auth && target.isO_Auth_profile && (target.avatarUrl === file.location)? true : false
+    target.avatarUrl = file ? file.location : target.avatarUrl;
     target.save();
     req.session.user = target
     return res.redirect(`/users/${target._id}/profile`)
