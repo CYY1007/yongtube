@@ -110,7 +110,7 @@ const handleUpdateView = (event) =>{
 }
 
 if (video.readyState == 4) {
-    handleLoadedMetadata();
+    handleTimeSetting();
 }
 
 playBtn.addEventListener("click",handlePlay);
