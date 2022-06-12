@@ -5,9 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start" : "node build/backend/init.js",
-    "bulid" : "npm run bulid:server && npm run bulid:assets",
-    "bulid:server":"babel src -d build --ignore src/frontend",
-    "bulid:assets":"webpack --mode=production",
+    "build" : "npm run build:server && npm run build:assets",
+    "build:server":"babel src -d build --ignore src/frontend",
+    "build:assets":"webpack --mode=production",
     "dev:server": "nodemon",
     "dev:assets": "webpack --mode=development -w"
   },
