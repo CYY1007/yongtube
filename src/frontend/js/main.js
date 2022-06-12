@@ -1,2 +1,2 @@
 import "../scss/styles.scss"
-import regen from "regenerator-runtime"
+import "regenerator-runtime"

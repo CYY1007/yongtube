@@ -4,9 +4,12 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "bulid:server":"babel src/backend/init.js -d build",
-    "dev": "nodemon",
-    "assets": "webpack"
+    "start" : "node build/backend/init.js",
+    "bulid" : "npm run bulid:server && npm run bulid:assets",
+    "bulid:server":"babel src -d build --ignore src/frontend",
+    "bulid:assets":"webpack --mode=production",
+    "dev:server": "nodemon",
+    "dev:assets": "webpack --mode=development -w"
   },
   "repository": {
     "type": "git",
